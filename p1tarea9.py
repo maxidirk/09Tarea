@@ -64,7 +64,8 @@ def ajuste_manual(x, y):
 
 def crear_muestra_sintetica(x,y):
     '''
-    crea muestra sintetica a partir de la muestra original x,y
+    crea muestra sintetica a partir de la muestra original x,y mediante
+    el metodo de Bootstap
     '''
     N = len(x)
     xs = np.zeros(N)
@@ -94,7 +95,7 @@ N = len(x)  # largo de la muestra
 Nb = N**2   # numero de muestras sinteticas a tomar
 
 b = np.zeros(Nb)  # arreglo para guardar los b_biseccion de cada muestra sintetica
-for i in range(Nb):  # se desarrolla el metodo de Bootstap
+for i in range(Nb):  # se itera el metodo de Bootstap
     xs, ys = crear_muestra_sintetica(x,y)
     b1 = ajuste_manual(xs, ys)
     b2 = ajuste_manual(ys, xs)
@@ -102,15 +103,18 @@ for i in range(Nb):  # se desarrolla el metodo de Bootstap
     b[i] = b_biseccion(b1,b2)
 
 # se calcula el intervalo de confianza al 95%
-b_values = np.sort(b)
-limite_bajo = b_values[int(Nb * 0.025)]
-limite_alto = b_values[int(Nb * 0.975)]
+b_values = np.sort(b)  # se ordenan los datos
+limite_bajo = b_values[int(Nb * 0.025)]  # limite inferior del intervalo
+limite_alto = b_values[int(Nb * 0.975)]  # limite superior del intervalo
 print "El intervalo de confianza al 95% es: [{}:{}]".format(limite_bajo, limite_alto)
 
+# calcula H0 a partir de los datos
 b1dato = ajuste_manual(x, y)
 b2dato = ajuste_manual(y, x)
 b2dato = 1. / b2
 bdato = b_biseccion(b1,b2)
+
+print 'Del ajuste lineal a los datos se obtiene : H0 = ', bdato
 
 plt.plot(x, lineal(x, limite_bajo), 'g--')
 plt.plot(x, lineal(x, limite_alto), 'r--')
