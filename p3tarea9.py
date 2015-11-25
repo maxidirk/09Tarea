@@ -34,11 +34,13 @@ def llamar_archivo(nombre):
     z = arch[:, 3]
     return w, x, y, z
 
+
 def lineal(x, b, a):
     '''
     y=a+bx considerando a y b distintos de cero
     '''
     return a + b * x
+
 
 def crear_muestra_sintetica(x, y, error_x, error_y):
     '''
@@ -84,13 +86,13 @@ a_values = np.sort(a)
 limite_bajo_a = a_values[int(Nb * 0.025)]
 limite_alto_a = a_values[int(Nb * 0.975)]
 print "El intervalo de confianza al 95% para \
-       a es: [{}:{}]".format(limite_bajo_a, limite_alto_a)
+       a es: [{} : {}]".format(limite_bajo_a, limite_alto_a)
 
 bdato, adato = np.polyfit(banda_i, banda_z, 1)
-print 'b y a del ajuste de los datos: b=', bdato,' a= ', adato
+print 'b y a del ajuste de los datos: b=', bdato, ' a= ', adato
 
 
-plt.plot(banda_i, lineal(banda_i, limite_bajo_b, limite_bajo_a), 'g--')
+plt.plot(banda_i, lineal(banb = 1.10 en un intervalo de confianza al 95\% de (0.93, 1.13)da_i, limite_bajo_b, limite_bajo_a), 'g--')
 plt.plot(banda_i, lineal(banda_i, limite_alto_b, limite_alto_a), 'r--')
 plt.plot(banda_i, lineal(banda_i, bdato, adato), 'b-')
 plt.errorbar(banda_i, banda_z, xerr=error_i, yerr=error_z, fmt='^')

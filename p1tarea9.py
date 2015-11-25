@@ -62,7 +62,7 @@ def ajuste_manual(x, y):
     return b
 
 
-def crear_muestra_sintetica(x,y):
+def crear_muestra_sintetica(x, y):
     '''
     crea muestra sintetica a partir de la muestra original x,y mediante
     el metodo de Bootstap
@@ -71,13 +71,13 @@ def crear_muestra_sintetica(x,y):
     xs = np.zeros(N)
     ys = np.zeros(N)
     for i in range(N):
-        j = int(np.random.uniform(0,N-1))
+        j = int(np.random.uniform(0, N - 1))
         xs[i] = x[j]
         ys[i] = y[j]
     return xs, ys
 
 
-def b_biseccion(b1,b2):
+def b_biseccion(b1, b2):
     '''
     calcula la pendiente de una recta entre las dos curvas de pendientes
     b1 y b2
@@ -94,25 +94,27 @@ x, y = llamar_archivo('hubble_original.dat')
 N = len(x)  # largo de la muestra
 Nb = N**2   # numero de muestras sinteticas a tomar
 
-b = np.zeros(Nb)  # arreglo para guardar los b_biseccion de cada muestra sintetica
+b = np.zeros(Nb)  # arreglo para guardar los b_bis de cada muestra sintetica
 for i in range(Nb):  # se itera el metodo de Bootstap
-    xs, ys = crear_muestra_sintetica(x,y)
+    xs, ys = crear_muestra_sintetica(x, y)
     b1 = ajuste_manual(xs, ys)
     b2 = ajuste_manual(ys, xs)
     b2 = 1. / b2
-    b[i] = b_biseccion(b1,b2)
+    b[i] = b_biseccion(b1, b2)
 
 # se calcula el intervalo de confianza al 95%
 b_values = np.sort(b)  # se ordenan los datos
 limite_bajo = b_values[int(Nb * 0.025)]  # limite inferior del intervalo
 limite_alto = b_values[int(Nb * 0.975)]  # limite superior del intervalo
-print "El intervalo de confianza al 95% es: [{}:{}]".format(limite_bajo, limite_alto)
+
+print "El intervalo de confianza al 95%\
+ es: [{} : {}]".format(limite_bajo, limite_alto)
 
 # calcula H0 a partir de los datos
 b1dato = ajuste_manual(x, y)
 b2dato = ajuste_manual(y, x)
 b2dato = 1. / b2
-bdato = b_biseccion(b1,b2)
+bdato = b_biseccion(b1, b2)
 
 print 'Del ajuste lineal a los datos se obtiene : H0 = ', bdato
 
